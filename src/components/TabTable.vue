@@ -1,8 +1,11 @@
 <template>
   <van-tabs v-model:active="active" sticky>
-    <van-tab :title="item" v-for="(item, index) in state.list" :name='index'>
+    <van-tab :title="item" v-for="(item, index) in state.list" :name="index">
       <div v-show="active == 0">
-        <div v-for="val in state.categoryList.filter(ival => ival.type == 1)" class="shopContent" >
+        <div
+          v-for="val in state.categoryList.filter((ival) => ival.type == 1)"
+          class="shopContent"
+        >
           {{ val.type }}
           <img :src="val.imgUrl" alt="" />
           <div class="shopTitle">
@@ -12,8 +15,11 @@
           </div>
         </div>
       </div>
-      <div v-show="active==1">
-        <div v-for="val in state.categoryList.filter(ival => ival.type == 2)" class="shopContent">
+      <div v-show="active == 1">
+        <div
+          v-for="val in state.categoryList.filter((ival) => ival.type == 2)"
+          class="shopContent"
+        >
           <img :src="val.imgUrl" alt="" />
           <div class="shopTitle">
             <div>特殊类:{{ val.type }}</div>
@@ -25,8 +31,8 @@
     </van-tab>
   </van-tabs>
   <van-cell-group inset>
-  <van-field v-model="value" label="文本" placeholder="请输入用户名" />
-</van-cell-group>
+    <van-field v-model="value" label="文本" placeholder="请输入用户名" />
+  </van-cell-group>
 </template>
 <script lang="ts">
 import { ref, reactive, watch } from "vue";
@@ -41,7 +47,7 @@ export default {
   },
   setup(props) {
     const active = ref(0);
-    const value = ref('')
+    const value = ref("");
     const state = reactive({
       swiperList: [], // 轮播图列表
       isLogin: false, // 是否已登录
@@ -123,9 +129,8 @@ export default {
       list: ["衣服", "全部"],
       loading: true,
     });
-    watch(value,(newValue,oldValue)=>{
-      console.log(newValue,oldValue,'oldValueoldValue');
-      
+    watch(value, (newValue, oldValue) => {
+      console.log(newValue, oldValue, "oldValueoldValue");
     });
     return { state, active, value };
   },

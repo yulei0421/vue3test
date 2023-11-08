@@ -6,7 +6,7 @@
 
 <script>
 import { disAutoConnect } from "vue-plugin-hiprint";
-import panel from "./panel";
+// import panel from "./panel";
 
 export default {
   name: "HelloWorld",
