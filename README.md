@@ -196,9 +196,17 @@ CommonJS 模块是运行时加载，ES6 模块是编译时输出接口
     4.依赖关系的管理
 
 基础类型引用类型
-    基础类型是不可以修改值的
-    引用类型是可以修改值的
+    基础类型是不可以修改值的 基础类型存在于栈中
+    let a = 10
+    let b = a
+    let a = 11
+    console.log(a === b) // false
 
+    引用类型是可以修改值的 引用类型存在于堆中,可以扩充大小.
+    let a = {}
+    let b = a
+    a.name = "nmwap"
+    console.log(a === b) // true
 
 箭头函数和普通函数的区别
     1 书写的区别
@@ -295,3 +303,96 @@ JS 常见的垃圾回收方式：标记清除、引用计数方式。
 当包含这个引用类型值的变量又被赋值成另一个值了，那么这个引用类型值的引用次数减 1；
 当引用次数变成 0 时，说明没办法访问这个值了；
 当垃圾收集器下一次运行时，它就会释放引用次数是0的值所占的内存。
+
+
+    function unique(arr) {
+      let obj = {}
+      arr.forEach(el => {
+        if (!obj[el]) obj[el] = true;
+      });
+      return Object.keys(obj)
+    }
+
+    console.log(unique([1, 2, 3, 3, 4, 4, 4]))
+
+    // new 操作符 第一步创建于一个新的对象, 第二将传入函数与新的对象原型连接 第三将传入函数指向创建的函数
+    function myMyNew(fn, ...arg) {
+      let obj = {}
+      if (typeof fn === 'function') {
+        throw 'fn is not function'
+      }
+      obj._proto = fn.prototype
+      let res = fn.call(obj, ...arg)
+      return typeof res == "object" ? res : obj
+    }
+
+    function myCall(fn, ...args) {
+      if (fn == 'null' || fn == 'undefined') {
+        fn == window
+      } else {
+        fn = Object(fn)
+      }
+      const key = Symbol('key')
+      fn[key] = this
+      const result = fn[key](...args);
+      delete fn[key]
+      return result
+    }
+
+    function myApply(fn, agrs) {
+      if (fn == 'null' || fn == 'undefined') {
+        fn = window
+      } else {
+        fn = Object(fn)
+      }
+      if (!Array.isArray(args)) {
+        throw ''
+      }
+      const key = Symbol('fn')
+      fn[key] = this
+      const result = fn[key](...arg)
+      delete fn[key]
+      return result
+    }
+
+    //冒泡排序
+    function mySort(arr) {
+      let arrLen = arr.length;
+      for (let i = 0; i < arrLen - 1; i++) {
+        for (let j = 0; j < arrlen - 1 - i; j++) {
+          if (arr[j] > arr[j + 1]) {
+            let temp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j + 1] = temp
+          }
+        }
+      }
+      return arr
+    }
+    //flat的实现
+
+    function myFlat1(arr){
+      let newArr = []
+      const rec = (array)=>{
+        array.forEach(item=>{
+          if(Array.isArray(item)){
+            rec(item)
+          }else{
+            newArr.push(item)
+          }
+        })
+      }
+      rec(arr)
+      return newArr
+    }
+
+    Array.prototype.myReduce = function (fn,initval) {
+      if(Array.isArray(this)){
+        let sumVal = initval ? initval : this[0];
+        for(let i = (initval ? 0 :1) ; i<this.length; i++ ){
+          let cur = this[i];
+          sumVal = fn(sumVal,cur,i,this)
+        }
+        return sumVal
+      }
+    }
