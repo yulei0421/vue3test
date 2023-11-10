@@ -347,6 +347,22 @@ Get  请求不对数据进行修改
 请求时附带验证信息，比如验证码或者 Token
 
 
+1 策略模式
+定义 : 要实现某一个功能，有多种方案可以选择。我们定义策略，把它们一个个封装起来，并且使它们可以相互转换。
+
+2 订阅模式
+定义:发布-订阅是一种消息范式，消息的发布者，不会将消息直接发送给特定的订阅者，而是通过消息通道广播出去，然后呢，订阅者通过订阅获取到想要的消息。
+
+3 装饰器模式
+定义:是为了给一个函数赋能，增强它的某种能力，它能动态的添加对象的行为，也就是我传入的就是一个对象  react中及代表HOC	
+
+4 单例模式
+定义: 单例出来的函数只会实例化一次,所以调用多次值也只会是第一次
+
+5 工厂模式
+定义: 类似于函数抽离, 抽离逻辑处理过程, 等到结果 
+
+
     function unique(arr) {
       let obj = {}
       arr.forEach(el => {
@@ -438,3 +454,35 @@ Get  请求不对数据进行修改
         return sumVal
       }
     }
+
+
+
+    function sleep(delay) {
+      const startTime = new Date().getTime()
+      while (new Date.getTime().getTime() - startTime < delay) {
+        continue;
+      }
+    }
+
+    async function sleep1(delay) {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, delay)
+      })
+    }
+
+    实现add(3).sub(2)
+    
+    //柯里化
+
+        function add(...a) {
+        console.log(a,'xxx')
+        let res = a.reduce((b, c) => b + c)
+        const add1 = (...b) => add(res, ...b)
+        add1.toString = () => {
+            return res
+        }
+        return add1
+    }
+    console.log(+add(1)(2));// 3
+    console.log(+add(1)(2, 3));// 6
+    console.log(+add(1)(2, 3)(4));// 10
